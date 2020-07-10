@@ -1,0 +1,19 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<nav class="navbar navbar-fixed-top navbar-dark bg-dark d-flex justify-content-between ">
+<a class="navbar-header text-white" href="/campground">YELPCAMP</a>
+<div >
+<a href="/logout"class="nav-item text-white mr-2" >LOGOUT</a>
+<a href="/campground/<%=campgroundid%>"class="nav-item text-white ml-4 mr-2" >BACK</a>
+</div>
+</nav>
+<div class="container " style="margin-top:7%;margin-left:18%;">
+<h1 style="margin-left:20%;"> Create A New Comment</h1>
+<div class="container pl-5 ml-5">
+<form action="/campground/<%=campgroundid%>/comment/<%-comment._id%>?_method=PUT" method="POST">
+<p >
+<input type="text"placeholder="comment" name="text" value="<%-comment.text%>" class="btn btn-lg mt-3 border-dark" style="width:70%;" required >
+</p>
+<button class="btn btn-primary btn-block" style="width:70%;" >Submit</button>
+</form>
+</div>
+</div>

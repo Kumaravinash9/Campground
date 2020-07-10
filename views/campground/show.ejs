@@ -1,0 +1,176 @@
+
+<style>
+  *{
+    margin:0px;
+    padding:0px;
+    box-sizing: border-box;
+  }
+.campground-container{
+ 
+  margin-top:60px;
+  
+}
+.campground-image{
+height: 70vh;
+width: 100%;
+}
+.campground-button{
+width:10vw;
+min-width: 90px;
+
+
+}
+#span{
+  font-weight: 900;
+   font-size: 1.4rem;
+   color: black;
+}
+.campground-title{
+  font-weight: 700;
+  font-size: .98rem;
+
+}
+.campground-description{
+font-size: .9rem;
+font-weight: 600;
+font-style: italic;
+
+}
+.comment{
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.comment-section{
+ min-height: 300px;
+  background: rgba(201, 201, 193,.2)
+  
+}
+.bottom{
+  
+  width: 100vw;height:10px;
+}
+.username{
+  font-size: 1.1rem;
+  font-weight: bold;
+  color:black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.text{
+  font-size: .8rem;
+font-weight: 600;
+font-style: italic;
+color: dimgrey
+
+}
+.comment-button{
+  min-width: 100px;
+  width: 15vw;
+  height: 6vh;
+  text-align: center;
+  
+}
+
+</style>
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<nav class="navbar navbar-expand-sm navbar-dark bg-warning fixed-top justify-content-between">
+<a class="navbar-brand" href="/campground">YELPCAMP</a>
+ <ul class="navbar-nav">
+  <%if(currentUser&&currentUser._id){%>
+  <li class="nav-item"><a href="/logout" class="nav-link">LOGOUT</a></li>
+  <li class="nav-item"><a href="/campground" class="nav-link ml-5">BACK</a></li><%}
+  else
+  {%>
+    <li class="nav-item"><a href="/login" class="nav-link ml-5">LOGIN</a></li>
+    <li class="nav-item"><a href="/register" class="nav-link ml-5">REGISTER</a></li>
+  <li class="nav-item"><a href="/campground" class="nav-link ml-5">BACK</a></li><%}%>
+ </ul>
+</nav>
+
+<section>
+  
+<div class="campground-container border container p-2">
+<img class="campground-image mb-2  rounded"src="<%-campground.image%>">
+<div class="row">
+  <div class="col-12 campground-title ml-2 mb-2 ">About: <span id="span"class="ml-2"><%-campground.title%></span></div>
+  <div class="col-12 campground-description ml-2 "><%-campground.description%></div>
+<div class="col-12  ml-2">
+ <div class="d-flex justify-content-around mt-4 ">
+  
+  <%  if( currentUser &&currentUser._id &&(campground.author.id.equals(currentUser.username))){
+      %>
+  <a href="/campground/<%=campground._id%>/edit" class="btn btn-primary btn-sm campground-button">Edit</a>
+  <a href="/campground/<%=campground._id%>/delete" class="btn btn-danger btn-sm  campground-button">Delete</a><%}%>
+
+  
+ </div>
+  </div>
+</div>
+</div>
+</section>
+
+
+<section class="section-3 ">
+  <div class="container p-0  mt-2">
+  <div class="comment mb-2">COMMENTS:-</div>
+  <div class="border rounded comment-section p-3">
+     <div>
+       <div class="text-right"> <a href="/campground/<%=campground._id%>/comment/new" class="btn btn-success  text-light  comment-button ">AdCommnt</a></div>
+<hr>
+       <%campground.comment.forEach(function(comment){%>
+  <div class="row mx-1">
+    <div class="col-12 ">
+      <div class="username">
+     <div> <%-comment.author.username%></div>
+ <%    if( currentUser &&currentUser._id && comment.author.username === currentUser.username){%>
+<div>
+
+      <a href="/campground/<%=campground._id%>/comment/<%=comment._id%>/edit" class="btn btn-sm ">Edit</a>     
+      <a href="/campground/<%=campground._id%>/comment/<%=comment._id%>/delete" class="btn btn-sm text-danger">Delete</a> 
+</div>
+<%}%>
+    </div>
+    <div class=" text mt-0  "><%-comment.text%></div>
+  </div>
+  
+ <%})%>
+     </div>
+  </div>
+  </div>
+</section>
+<div class="bottom"></div>
+
+
+
+   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
