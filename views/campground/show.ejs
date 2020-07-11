@@ -101,7 +101,7 @@ color: dimgrey
 <div class="col-12  ml-2">
  <div class="d-flex justify-content-around mt-4 ">
   
-  <%  if( currentUser &&currentUser._id &&(campground.author.id.equals(currentUser.username))){
+  <%  if( currentUser &&currentUser._id &&(JSON.stringify(campground.author.id) === JSON.stringify(currentUser._id))){
       %>
   <a href="/campground/<%=campground._id%>/edit" class="btn btn-primary btn-sm campground-button">Edit</a>
   <a href="/campground/<%=campground._id%>/delete" class="btn btn-danger btn-sm  campground-button">Delete</a><%}%>
@@ -126,7 +126,7 @@ color: dimgrey
     <div class="col-12 ">
       <div class="username">
      <div> <%-comment.author.username%></div>
- <%    if( currentUser &&currentUser._id && comment.author.username === currentUser.username){%>
+ <%    if( currentUser &&currentUser._id && JSON.stringify(campground.author.id) === JSON.stringify(currentUser._id)){%>
 <div>
 
       <a href="/campground/<%=campground._id%>/comment/<%=comment._id%>/edit" class="btn btn-sm ">Edit</a>     
