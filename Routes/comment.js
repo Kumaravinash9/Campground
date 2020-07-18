@@ -1,11 +1,11 @@
 var express      =  require("express"),
 route            =  express.Router(),
-User             =  require("../models/User"),
+flash            =  require("connect-flash"),
 comment          =  require("../models/comment"),
 Campground       =  require("../models/Campground");
  
 
-
+route.use(flash());
 
 route.use(function(req,res,next){
     res.locals.currentUser = req.user;
@@ -14,6 +14,7 @@ route.use(function(req,res,next){
     next();
   });
 
+  //                         Create Comment
 
 route.get("/campground/:id/comment/new",isLoggedIn,function(req,res){
     Campground.findById(req.params.id,function(err,campground){
@@ -24,7 +25,7 @@ route.get("/campground/:id/comment/new",isLoggedIn,function(req,res){
     })
    });
  
-  //                       Post Route                           //
+  //                       Post Route Comment                         //
  
   route.post("/campground/:id/comment",function(req,res){
    Campground.findById(req.params.id).populate("comment").exec(function(err,Campground){
@@ -51,7 +52,7 @@ route.get("/campground/:id/comment/new",isLoggedIn,function(req,res){
   })
   });
  
-  //                Edit Route               //
+  //               Edit Route   Comment             //
 
 route.get("/campground/:id/comment/:comment_id/edit",function(req,res){
  comment.findById(req.params.comment_id,function(err,comment){
@@ -62,7 +63,7 @@ route.get("/campground/:id/comment/:comment_id/edit",function(req,res){
    comment:comment,campgroundid:req.params.id
  })}})});
  
-  //                  UPDATE                //
+  //               UPDATE  Comment               //
  
  route.put("/campground/:id/comment/:comment_id",function(req,res){
   comment.findByIdAndUpdate(
@@ -76,6 +77,7 @@ route.get("/campground/:id/comment/:comment_id/edit",function(req,res){
  
  });
 
+//                 Delect Cooment         
 
  route.get("/campground/:id/comment/:comment_id/delete",function(req,res){
  comment.findByIdAndDelete(
@@ -88,6 +90,8 @@ route.get("/campground/:id/comment/:comment_id/edit",function(req,res){
  }
  )
  });
+
+//               LogIn MiddleWare
 
   function isLoggedIn(req,res,next){
     if(req.isAuthenticated())

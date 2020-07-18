@@ -1,19 +1,38 @@
    var express      =  require("express"),
    route            =  express.Router(),
-   User             = require("../models/User"),
-   comment          = require("../models/comment"),
-   Campground       = require("../models/Campground");
+   Campground       = require("../models/Campground"),
+   flash            =  require("connect-flash"),
+   path             = require("path"),
+   multer           = require("multer"),
+   fs               = require("fs");
   
-  
+/*********************Multer Config  ******************/
 
-  route.use(function(req,res,next){
+   route.use(flash());
+
+   var storage = multer.diskStorage({
+    
+    destination:function(req,file,cb){
+      cb(null,'Uploads/image')
+    },
+    filename:function(req,file,cb){
+      cb(null,file.fieldname+"-"+Date.now()+path.extname(file.originalname))
+    }
+   });
+   var upload = multer({
+     storage:storage
+   });
+
+
+    route.use(function(req,res,next){
     res.locals.currentUser = req.user;
     res.locals.message     = req.flash("error");
     res.locals.success     = req.flash("success");
     next();
   });
 
-   // Campground
+   //**********Campground  **********/
+
    route.get("/campground",function(req,res){
     Campground.find({},function(err,campground){
      if(err)
@@ -28,16 +47,22 @@
   //*******  NEW ROUTES   **********//
      
    route.get("/campground/new",isLoggedIn,function(req,res){
+     
      res.render("campground/new");
     });
 
   //*******  CREATE ROUTES   *************//
 
-route.post("/campground",function(req,res){
-       Campground.create({
+route.post("/campground",upload.single("image"),function(req,res,next){
+  Campground.create({
            title:req.body.title,
-           image:req.body.image,
+           
            description:req.body.description,
+           image:{
+             imagelocation:'../Uploads/image/'+req.file.filename,
+             data:fs.readFileSync(path.join('Uploads/image/'+req.file.filename)),
+             contentType:req.file.mimetype
+           }
           
         },function(err,Campground){
           if(err)
@@ -63,17 +88,29 @@ route.post("/campground",function(req,res){
     
     })
   });
+
+  //***********  EDIT ROUTE   *************/
+
   route.get("/campground/:id/edit",function(req,res){
-    Campground.findById(req.params.id,function(err,user){
+    Campground.findById(req.params.id,function(err,campground){
       if(err)
       console.log(err);
       else
-      res.render("campground/edit",{user:user});
+      res.render("campground/edit",{campground:campground});
     })
     });
     
-    route.put("/campground/:id",function(req,res){
-    Campground.findByIdAndUpdate(req.params.id,req.body.user,function(err,user){
+
+    route.put("/campground/:id",upload.single("image"),function(req,res,next){
+    Campground.findByIdAndUpdate(req.params.id,{
+      title:req.body.campground.title,
+      description:req.body.campground.description,
+      image:{
+        imagelocation:'../Uploads/image/'+req.file.filename,
+        data:fs.readFileSync(path.join('Uploads/image/'+req.file.filename)),
+        contentType:req.file.mimetype
+      }
+    },function(err,campground){
     if(err)
     res.redirect("/campground/"+req.params.id+"/edit");
     else
@@ -91,7 +128,8 @@ route.post("/campground",function(req,res){
      res.redirect("/campground");
     })
     });
-
+    
+//***************LogIn MiddleWare ***********/
     function isLoggedIn(req,res,next){
         if(req.isAuthenticated())
         return next();
@@ -99,4 +137,6 @@ route.post("/campground",function(req,res){
         res.redirect("/login");
         };
  
+//*******************Exports  **************/
+
      module.exports =route;

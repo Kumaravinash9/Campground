@@ -1,21 +1,31 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<!--                      Navbar                           -->
+
 <nav class="navbar navbar-fixed-top navbar-dark bg-dark ">
 <a class="navbar-header text-white" href="/campground">YELPCAMP</a>
-<a href="/campground/<%=user._id%>"class="nav-item text-white " >BACK</a>
+<a href="/campground/<%-campground._id%>"class="nav-item text-white " >BACK</a>
 </nav>
-<div class="container " style="margin-top:7%;margin-left:18%;">
-<h1 style="margin-left:20%;"> Create A New Campground</h1>
-<div class="container pl-5 ml-5">
-<form action="/campground/<%=user._id%>?_method=PUT"method="POST">
 
-<input type="text"placeholder="name"name="user[title]"  value="<%=user.title%>"style="width:70%;" class="btn btn-lg mt-3 border-dark"  required >
+<!--                     Edit Page                         -->
+
+
+
+<div class="container " style="margin-top:7%;margin-left:18%;">
+<h1 style="margin-left:20%;"> Edit Campground    </h1>
+<div class="container pl-5 ml-5">
+<form action="/campground/<%-campground._id%>?_method=PUT"method="POST" enctype="multipart/form-data">
+
+<input type="text"placeholder="name"name="campground[title]"  value="<%-campground.title%>"style="width:70%;" class="btn btn-lg mt-3 border-dark"  required >
 <p >
-<input type="text"placeholder="image" name="user[image]" value="<%=user.image%>"class="btn btn-lg mt-3 border-dark" style="width:70%;" required >
+<input type="file"placeholder="image" name="image"   accept="image/*" class="btn btn-lg mt-3 border-dark" style="width:70%;" required >
 </p>
-<textarea  style="width:70%;height:20%;" class="my-2 mb-4  border border-dark rounded btn" name="user[description]">
-<%=user.description%>
+<textarea  style="width:70%;height:20%;" class="my-2 mb-4  border border-dark rounded btn" name="campground[description]">
+<%-campground.description%>
 </textarea>
 <button class="btn btn-primary btn-block" style="width:70%;" >Submit</button>
 </form>
+
+
 </div>
-</div
+</div>

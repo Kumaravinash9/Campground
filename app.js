@@ -13,11 +13,12 @@ var express           = require("express"),
     methodeOverride   = require("method-override"),
     passport          = require("passport"),
     passportLocal     = require("passport-local"),
-    passportLocalMong = require("passport-local-mongoose"),
+    GoogleStrategy    = require("passport-google-oauth").OAuth2Strategy,
     expressSession    = require("express-session"),
     CampgroundRoutes  = require("./Routes/campground"),
     commentRoutes     = require("./Routes/comment"),
     UserAuth          = require("./Routes/auth"),
+    GoogleAuth        = require("./Routes/GoogleAuth"),
     app               = express();
    
 
@@ -30,12 +31,9 @@ var express           = require("express"),
   app.use(bodyParser.urlencoded({extended:true}));
   app.use(express.static("public"));
   app.use(methodeOverride("_method"));
-  
+  app.use(bodyParser.json());
   app.use(flash());
-  
 
-
-  
   //********* PASSPORT AUTHENTICATION *******//
 
   app.use(expressSession({
@@ -45,10 +43,50 @@ var express           = require("express"),
   }));
   app.use(passport.initialize());
   app.use(passport.session());
-  
   passport.serializeUser(User.serializeUser());
   passport.deserializeUser(User.deserializeUser());
   passport.use(new passportLocal(User.authenticate())); 
+  
+  //************  GOOGLE AUTH  ************//
+
+  passport.serializeUser(function(user,done){
+    done(null,user.id);
+})
+  passport.deserializeUser(function(id,done){
+    User.findById(id,function(err,user){
+        if(err)
+        console.log(err);
+        done(null,user);
+    })
+})
+
+passport.use(new GoogleStrategy({
+  clientID:"179375713146-bihqrmtushefdhhjbe434ghbo8c76bf2.apps.googleusercontent.com",
+  clientSecret: "-ell0ZyY8jlwq7509c5yhxbf",
+  callbackURL: "http://localhost:3000/googleAuth"
+},
+function(accessToken, refreshToken, profile, done) {
+    console.log(profile);
+     User.findOne({ googleId: profile.id }, function (err, user) {
+         if(err)
+         console.log(err);
+         else{
+      if(user)
+      { done(null, user);}
+      else
+      {
+          User.create({
+            username: profile.displayName,
+             googleId: profile.id
+          },function(err,user)
+          {user.save();
+              done(null,user);
+              console.log(user);
+
+          })}}})}));
+
+//**************************************************//
+
 
   app.use(function(req,res,next){
     res.locals.currentUser = req.user;
@@ -56,18 +94,21 @@ var express           = require("express"),
     res.locals.success     = req.flash("success");
     next();
   });
+ 
+  app.get("/",function(req,res){
+   
+    res.render("campground/home");
+
+
+  });
 
 
   app.use(CampgroundRoutes);
   app.use(commentRoutes);
   app.use(UserAuth);
+  app.use(GoogleAuth);
  
-  function isLoggedIn(req,res,next){
-    if(req.isAuthenticated())
-    return next();
-    req.flash("error","oops! you have to loggin first.");
-    res.redirect("/login");
-    };
+  
 
   //************  APP LISTEN ************/
 

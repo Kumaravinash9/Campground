@@ -1,118 +1,59 @@
-
-<style>
-  *{
-    margin:0px;
-    padding:0px;
-    box-sizing: border-box;
-  }
-.campground-container{
- 
-  margin-top:60px;
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-}
-.campground-image{
-height: 70vh;
-width: 100%;
-}
-.campground-button{
-width:10vw;
-min-width: 90px;
-
-
-}
-#span{
-  font-weight: 900;
-   font-size: 1.4rem;
-   color: black;
-}
-.campground-title{
-  font-weight: 700;
-  font-size: .98rem;
-
-}
-.campground-description{
-font-size: .9rem;
-font-weight: 600;
-font-style: italic;
-
-}
-.comment{
-  font-size: 1.2rem;
-  font-weight: 700;
-}
-.comment-section{
- min-height: 300px;
-  background: rgba(201, 201, 193,.2)
-  
-}
-.bottom{
-  
-  width: 100vw;height:10px;
-}
-.username{
-  font-size: 1.1rem;
-  font-weight: bold;
-  color:black;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.text{
-  font-size: .8rem;
-font-weight: 600;
-font-style: italic;
-color: dimgrey
-
-}
-.comment-button{
-  min-width: 100px;
-  width: 15vw;
-  height: 6vh;
-  text-align: center;
-  
-}
-
-</style>
-
-
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link  rel="stylesheet" href="../css/show.css">
 
-<nav class="navbar navbar-expand-sm navbar-dark bg-warning fixed-top justify-content-between">
+<!--                            style        -->
+</head>
+
+<body>
+
+<!--                    Navbar                                      -->
+
+<nav class="navbar navbar-expand  navbar-dark bg-warning fixed-top justify-content-between">
 <a class="navbar-brand" href="/campground">YELPCAMP</a>
  <ul class="navbar-nav">
   <%if(currentUser&&currentUser._id){%>
-  <li class="nav-item"><a href="/logout" class="nav-link">LOGOUT</a></li>
-  <li class="nav-item"><a href="/campground" class="nav-link ml-5">BACK</a></li><%}
+  <li class="nav-item"><a href="/logout" class="nav-link text-light">LOGOUT</a></li>
+  <li class="nav-item"><a href="/campground" class="nav-link ml-5 text-light">BACK</a></li><%}
   else
   {%>
-    <li class="nav-item"><a href="/login" class="nav-link ml-5">LOGIN</a></li>
-    <li class="nav-item"><a href="/register" class="nav-link ml-5">REGISTER</a></li>
-  <li class="nav-item"><a href="/campground" class="nav-link ml-5">BACK</a></li><%}%>
+    <li class="nav-item"><a href="/login" class="nav-link ml-5 text-light">LOGIN</a></li>
+    <li class="nav-item"><a href="/register" class="nav-link ml-5 text-light">SIGNUP</a></li>
+  <li class="nav-item"><a href="/campground" class="nav-link ml-5 text-light">BACK</a></li><%}%>
  </ul>
 </nav>
+
+<!--                     Section                                           -->
 
 <section>
   
 <div class="campground-container border container p-2">
-<img class="campground-image mb-2  rounded"src="<%-campground.image%>">
+<img class="campground-image mb-2  rounded"src="data:image/<%-campground.image.contentType%>;base64, 
+<%-campground.image.data.toString('base64')%>">
 <div class="row">
-  <div class="col-12 campground-title ml-2 mb-2 ">About: <span id="span"class="ml-2"><%-campground.title%></span></div>
+  <div class="col-12 campground-title ml-2 mb-2 "><span id="span"class="ml-2"><%-campground.title%></span></div>
   <div class="col-12 campground-description ml-2 "><%-campground.description%></div>
+  <div class="col-12 campground-author ml-2 text-right mr-5 pr-5 mt-3 ">Submitted by  <span><%-campground.author.username%></span></div>
+  <div class="col-12 campground-author ml-2 text-right mr-5 pr-5 mt-3 ">  <%-campground.date.toDateString()%> </div>
 <div class="col-12  ml-2">
  <div class="d-flex justify-content-around mt-4 ">
   
-  <%  if( currentUser &&currentUser._id &&(JSON.stringify(campground.author.id) === JSON.stringify(currentUser._id))){
+  <%  if( currentUser &&currentUser._id &&(JSON.stringify(campground.author.username) === JSON.stringify(currentUser.username))){
       %>
   <a href="/campground/<%=campground._id%>/edit" class="btn btn-primary btn-sm campground-button">Edit</a>
   <a href="/campground/<%=campground._id%>/delete" class="btn btn-danger btn-sm  campground-button">Delete</a><%}%>
-
-  
  </div>
   </div>
 </div>
 </div>
 </section>
 
+
+<!--                     Section 3                                                      -->
 
 <section class="section-3 ">
   <div class="container p-0  mt-2">
@@ -126,7 +67,7 @@ color: dimgrey
     <div class="col-12 ">
       <div class="username">
      <div> <%-comment.author.username%></div>
- <%    if( currentUser &&currentUser._id && JSON.stringify(campground.author.id) === JSON.stringify(currentUser._id)){%>
+ <%    if( currentUser && currentUser._id && JSON.stringify(campground.author.username) === JSON.stringify(currentUser.username)){%>
 <div>
 
       <a href="/campground/<%=campground._id%>/comment/<%=comment._id%>/edit" class="btn btn-sm ">Edit</a>     
@@ -142,13 +83,18 @@ color: dimgrey
   </div>
   </div>
 </section>
+
+
+<!--                Bottom Part                                      -->
+
 <div class="bottom"></div>
 
 
 
-   
+
+</body>
   
-  
+  </html>
   
   
   

@@ -1,7 +1,11 @@
 var mongoose = require("mongoose"),
     Schema   = new mongoose.Schema({
          title: String,
-         image: String,
+         image: {
+             imagelocation:String,
+             data:"Buffer",
+             contentType: String
+         },
          description:String,
          comment:[{type:mongoose.Schema.Types.ObjectId,ref:"comment"}],
          date:{

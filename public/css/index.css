@@ -1,4 +1,191 @@
+*{
+    margin:0px;
+    padding: 0px;
+    box-sizing: border-box;
 
-   body{
-       color: darkgreen;
-   }
+}
+body
+{
+    scroll-behavior: smooth;
+   /* background:linear-gradient(to bottom , rgb(0, 0, 0),rgb(100, 152, 182));*/
+}
+
+.navbar
+{
+display: flex;
+justify-content: space-between;
+align-items: center;
+background-color: khaki;
+
+
+width: 100vw;
+
+}
+
+.nav-link
+{
+margin-left: 4vw;
+margin-right: 2vw;
+color: black;
+cursor: pointer;
+font-size: .75rem;
+font-weight: 600;
+
+
+}
+.navbar-nav
+{
+display: flex;
+justify-content: space-around;
+align-items: center;
+}
+
+.nav-link:hover
+{
+text-decoration: none;
+color: inherit;
+}
+
+.navbar-brand
+{
+font-size: 1.5rem;
+color: black;
+cursor: pointer;
+text-transform: uppercase;
+font-weight: 500;
+margin-left: 5vw;
+}
+
+.navbar-brand:hover
+{
+text-decoration: none;
+}
+
+.fab
+{
+   font-size: 1.8rem;
+}
+
+.fas
+{
+    font-size: 1.2rem;
+}
+.fab:hover
+{
+color: cyan;
+}
+.fas:hover{
+color: cadetblue;
+}
+
+.fa-camera-retro{
+
+    font-size: 4.5rem;
+}
+
+
+.section-1{
+
+width:100vw;
+min-height: 300px;
+
+
+
+
+}
+
+.column-1{
+font-weight: 200;
+font-size: 4rem;
+font-family: "Rowdies";
+}
+.column-2{
+
+font-style: italic;
+color: black;
+font-weight: 600;
+}
+
+.find{
+ display: none;
+   transition: display 4s linear 1s;
+}
+.campground-container
+{
+
+    max-width: 400px;
+    background-color: floralwhite;
+    z-index: 5;
+    position: relative;
+   
+}
+.campground-image{
+width: 100%;
+height:35vh;
+min-height: 220px;
+max-height: 300px;
+
+}  
+
+.campground-title{
+font-size: 1.1rem;
+font-weight: 700;
+font-style: italic;
+color: cornflowerblue;
+}
+.campground-title:hover{
+text-decoration: underline;
+color:darkgoldenrod;
+cursor: pointer;
+}
+.campground-row-1{
+display: flex;
+justify-content: space-between;
+align-items: center;
+
+}
+.campground-row-1-item-1{
+font-size: .8rem;
+font-style: italic;
+
+font-weight: 500;
+}
+.addcamp-btn{
+    width:15vw;height:40px;font-size:1.2rem;text-transform:uppercase;font-style:italic;
+    min-width: 160px;
+    min-height: 30px;
+}
+
+@media screen and (max-width: 600px) {
+  .column-1{
+      font-size:2rem;
+      
+  }  
+  .column-2{
+
+font-style: italic;
+color: black;
+font-weight: 600;
+font-size: .6rem;
+}
+.addcamp-btn{
+    font-size:.9rem ;
+    height: 10px;
+}.fas{
+    font-size: .8rem;
+}
+.navbar-brand{
+    font-size: 1.1rem;
+}
+.nav-link{
+    font-size: .5rem;
+
+}
+.fab{
+    font-size:1.1rem;
+}
+.fa-camera-retro{
+    font-size: 2rem;
+}
+
+}
