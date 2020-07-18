@@ -26,7 +26,8 @@ var express           = require("express"),
          FUNCTION DEFINE
   ========================================*/
 
-  mongoose.connect("mongodb://localhost:27017/yelp-v3",{useNewUrlParser:true});
+ // mongoose.connect("mongodb://localhost:27017/yelp-v3",{useNewUrlParser:true});
+ mongoose.connect("mongodb+srv://avinash:Bhai@vi9@cluster0.vtitv.mongodb.net/yelpcamp?retryWrites=true&w=majority",{useNewUrlParser:true})
   app.set("view engine","ejs");
   app.use(bodyParser.urlencoded({extended:true}));
   app.use(express.static("public"));
