@@ -27,7 +27,7 @@ var express           = require("express"),
   ========================================*/
 
  // mongoose.connect("mongodb://localhost:27017/yelp-v3",{useNewUrlParser:true});
- mongoose.connect("mongodb+srv://avinash:Bhai@vi9@cluster0.vtitv.mongodb.net/yelpcamp?retryWrites=true&w=majority",{useNewUrlParser:true})
+ mongoose.connect("mongodb+srv://avinash:Bhai@vi9@cluster0.vtitv.mongodb.net/yelpcamp?retryWrites=true&w=majority",{useNewUrlParser:true,useUnifiedTopology:true,useFindAndModify:true})
   app.set("view engine","ejs");
   app.use(bodyParser.urlencoded({extended:true}));
   app.use(express.static("public"));
@@ -62,12 +62,12 @@ var express           = require("express"),
 })
 
 passport.use(new GoogleStrategy({
-  clientID:"179375713146-bihqrmtushefdhhjbe434ghbo8c76bf2.apps.googleusercontent.com",
-  clientSecret: "-ell0ZyY8jlwq7509c5yhxbf",
+  clientID:"179375713146-4465b5ku1uum5t9o1vgi7u8uaq8jps0a.apps.googleusercontent.com",
+  clientSecret: "cFmmwyFcssa4Qp2Vzp_yKS5F",
   callbackURL: "http://localhost:3000/googleAuth"
 },
 function(accessToken, refreshToken, profile, done) {
-    console.log(profile);
+    
      User.findOne({ googleId: profile.id }, function (err, user) {
          if(err)
          console.log(err);
