@@ -8,8 +8,8 @@ const express         = require("express"),
     User              = require("./models/User"),
     comment           = require("./models/comment"),
     Campground        = require("./models/Campground"),
-    
-    port              = process.env.PORT || 3000,
+    path              = require("path"),
+   dotenv             = require("dotenv"),
     flash             = require("connect-flash"),
     methodeOverride   = require("method-override"),
     passport          = require("passport"),
@@ -25,6 +25,10 @@ const express         = require("express"),
    cookiesSession     = require("cookie-session"),
     app               = express();
    
+  
+  dotenv.config({
+    path:"config.env"
+  })
 
 /*========================================
          FUNCTION DEFINE
@@ -130,8 +134,8 @@ function(accessToken, refreshToken, profile, done) {
   
 
   //************  APP LISTEN ************/
-  
-    app.listen(port, () => {
+  const PORT = process.env.PORT||3000;
+    app.listen(PORT, () => {
       console.log('Web server started at port 8000!');
     });
   
