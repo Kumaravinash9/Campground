@@ -12,6 +12,7 @@
 height: 80vh;
 width: 100%;
 max-height: 550px;
+min-height: 200px;
 }
 .campground-button{
 width:10vw;

@@ -2,23 +2,27 @@
             DEFINATION
   ======================================*/
 
-var express           = require("express"),
+const express         = require("express"),
     bodyParser        = require("body-parser"),
     mongoose          = require("mongoose"),
     User              = require("./models/User"),
     comment           = require("./models/comment"),
     Campground        = require("./models/Campground"),
-    cat               = require("cat-me"),
+    
+    port              = process.env.PORT || 3000,
     flash             = require("connect-flash"),
     methodeOverride   = require("method-override"),
     passport          = require("passport"),
     passportLocal     = require("passport-local"),
     GoogleStrategy    = require("passport-google-oauth").OAuth2Strategy,
-    expressSession    = require("express-session"),
+    
+    cokkieParser      = require("cookie-parser"),
     CampgroundRoutes  = require("./Routes/campground"),
     commentRoutes     = require("./Routes/comment"),
     UserAuth          = require("./Routes/auth"),
     GoogleAuth        = require("./Routes/GoogleAuth"),
+    
+   cookiesSession     = require("cookie-session"),
     app               = express();
    
 
@@ -27,7 +31,9 @@ var express           = require("express"),
   ========================================*/
 
  // mongoose.connect("mongodb://localhost:27017/yelp-v3",{useNewUrlParser:true});
- mongoose.connect("mongodb+srv://avinash:Bhai@vi9@cluster0.vtitv.mongodb.net/yelpcamp?retryWrites=true&w=majority",{useNewUrlParser:true,useUnifiedTopology:true,useFindAndModify:true})
+
+ app.use(cokkieParser());
+ mongoose.connect("mongodb+srv://avinash:Bhai@vi9@cluster0.vtitv.mongodb.net/yelpcamp?retryWrites=true&w=majority",{useNewUrlParser:true,useFindAndModify:true,useUnifiedTopology:true});
   app.set("view engine","ejs");
   app.use(bodyParser.urlencoded({extended:true}));
   app.use(express.static("public"));
@@ -36,12 +42,25 @@ var express           = require("express"),
   app.use(flash());
 
   //********* PASSPORT AUTHENTICATION *******//
+/*app.use(cookiesSession({
+  name : 'session',
+    secret: 'super-secret-key',
+    resave: true,
+    saveUninitialized: false,
+    cookie: { maxAge: 1000 * 60 * 60 },
+ 
+    maxAge: 1000 * 60 * 60
+}));*/
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
-  app.use(expressSession({
-    secret:"RUSTY",
-    resave:false,
-    saveUninitialized:false
-  }));
+app.use(session({
+    secret: 'foo',
+    resave: true,
+    saveUninitialized: false,
+    store: new MongoStore({mongooseConnection: mongoose.connection})
+}));
+  
   app.use(passport.initialize());
   app.use(passport.session());
   passport.serializeUser(User.serializeUser());
@@ -64,7 +83,7 @@ var express           = require("express"),
 passport.use(new GoogleStrategy({
   clientID:"179375713146-4465b5ku1uum5t9o1vgi7u8uaq8jps0a.apps.googleusercontent.com",
   clientSecret: "cFmmwyFcssa4Qp2Vzp_yKS5F",
-  callbackURL: "http://localhost:3000/googleAuth"
+  callbackURL: "/googleAuth"
 },
 function(accessToken, refreshToken, profile, done) {
     
@@ -103,7 +122,6 @@ function(accessToken, refreshToken, profile, done) {
 
   });
 
-
   app.use(CampgroundRoutes);
   app.use(commentRoutes);
   app.use(UserAuth);
@@ -112,7 +130,8 @@ function(accessToken, refreshToken, profile, done) {
   
 
   //************  APP LISTEN ************/
-
-    app.listen(3000,function(){
-    console.log(cat());
+  
+    app.listen(port, () => {
+      console.log('Web server started at port 8000!');
     });
+  
