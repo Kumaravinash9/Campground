@@ -46,15 +46,7 @@ const express         = require("express"),
   app.use(flash());
 
   //********* PASSPORT AUTHENTICATION *******//
-/*app.use(cookiesSession({
-  name : 'session',
-    secret: 'super-secret-key',
-    resave: true,
-    saveUninitialized: false,
-    cookie: { maxAge: 1000 * 60 * 60 },
- 
-    maxAge: 1000 * 60 * 60
-}));*/
+
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 

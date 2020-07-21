@@ -13,17 +13,17 @@
 
 <!--                    Navbar                                      -->
 
-<nav class="navbar navbar-expand  navbar-dark bg-warning fixed-top justify-content-between">
+<nav class="navbar navbar-expand  navbar-dark bg-dark fixed-top justify-content-between">
 <a class="navbar-brand" href="/campground">YELPCAMP</a>
  <ul class="navbar-nav">
   <%if(currentUser&&currentUser._id){%>
-  <li class="nav-item"><a href="/logout" class="nav-link text-light">LOGOUT</a></li>
-  <li class="nav-item"><a href="/campground" class="nav-link ml-5 text-light">BACK</a></li><%}
+  <li class="nav-item"><a href="/logout" class="nav-link ">LOGOUT</a></li>
+  <li class="nav-item"><a href="/campground" class="nav-link ml-5 ">BACK</a></li><%}
   else
   {%>
-    <li class="nav-item"><a href="/login" class="nav-link ml-5 text-light">LOGIN</a></li>
-    <li class="nav-item"><a href="/register" class="nav-link ml-5 text-light">SIGNUP</a></li>
-  <li class="nav-item"><a href="/campground" class="nav-link ml-5 text-light">BACK</a></li><%}%>
+    <li class="nav-item"><a href="/login" class="nav-link ml-5 ">LOGIN</a></li>
+    <li class="nav-item"><a href="/register" class="nav-link ml-5 ">SIGNUP</a></li>
+  <li class="nav-item"><a href="/campground" class="nav-link ml-5 ">BACK</a></li><%}%>
  </ul>
 </nav>
 
