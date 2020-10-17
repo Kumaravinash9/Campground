@@ -43,10 +43,13 @@
 **Technology I used in this project**
 
 **Fontent Section**
-   (1). HTML
-   (2). CSS
-   (3). BootStrap-4.0
-   (4).JavaScript
+    HTML
+   
+    CSS
+   
+    BootStrap-4.0
+   
+    JavaScript
    
    
 **Backend Section**
@@ -55,29 +58,29 @@
    **Express(FrameWork)**
    
    
-       (a) express
-       (b) ejs
-       (c) BodyParser
-       (d) path
-       (e) dotenv
-       (f) passport
-       (g) Google-passport
-       (h) mongoose
-       (i) mongoose-connect
-       (j) express-session
-       (k) nodemon
-       (l) multer
-       (m) passport-local
-       (n) connect-flash
+        express
+        ejs
+        BodyParser
+        path
+        dotenv
+        passport
+        Google-passport
+        mongoose
+        mongoose-connect
+        express-session
+        nodemon
+        multer
+        passport-local
+        connect-flash
        
        
        
-    **Database**
+    Database
         (1). MongoDb
         
         
         
-    **Authentication**
+    Authentication
         (a). Local-Authentication
         (b). Google-Authentication
         
