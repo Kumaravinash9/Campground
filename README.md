@@ -82,7 +82,7 @@
         
         
         
-   **Authentication*
+   **Authentication**
    
         (a). Local-Authentication
         (b). Google-Authentication
