@@ -43,6 +43,7 @@
 **Technology I used in this project**
 
 **Fontent Section**
+
     HTML
    
     CSS
@@ -75,12 +76,14 @@
        
        
        
-    Database
+   **Database**
+   
         (1). MongoDb
         
         
         
-    Authentication
+   **Authentication*
+   
         (a). Local-Authentication
         (b). Google-Authentication
         
