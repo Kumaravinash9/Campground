@@ -47,8 +47,14 @@
    (2). CSS
    (3). BootStrap-4.0
    (4).JavaScript
+   
+   
 **Backend Section**
+
+
    **Express(FrameWork)**
+   
+   
        (a) express
        (b) ejs
        (c) BodyParser
@@ -63,11 +69,19 @@
        (l) multer
        (m) passport-local
        (n) connect-flash
+       
+       
+       
     **Database**
         (1). MongoDb
+        
+        
+        
     **Authentication**
         (a). Local-Authentication
         (b). Google-Authentication
+        
+        
         
 **Deploy on Heroku**
       
