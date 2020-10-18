@@ -45,11 +45,8 @@
 **Fontent Section**
 
     HTML
-   
     CSS
-   
     BootStrap-4.0
-   
     JavaScript
    
    
